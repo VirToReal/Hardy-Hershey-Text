@@ -7,6 +7,7 @@ This Extension is based on the already included Inkscape-Extension "Hershey Text
 - Added Layout managment System with xml Files - You define a Layout and the Extension will place Text at your wish
 - Added new Single-Line Font "standard" by Andrew Mustun (QCad - http://qcad.org)
 - Added Text Manipulation Parameters
+- The "Use mm instead of pixel" Checkbox is for no use at the moment ;-)
 
 # Installation
 This Extension is just tested with Linux at moment, should work with Windows too
