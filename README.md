@@ -19,22 +19,22 @@ This Extension is just tested with Linux at moment, should work with Windows too
 
 # Description of the XML File
 ***Text:***
-<coords>Line1</coords> Places the 1. Line of Text which is determined in the Inkscape-Plugin
-coords Attributes for manipulation an positioning of Text (Orgin-Point left/bottom)
-("x") X Position of Text-Field in mm (depending on Text Alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
-("y") Y Position of Text-Field in mm (Bottom Origin-Point)
-("align") Text Alignment (left/right/center/textcenter) // textcenter = orgin point is the center of text itself
-("tsize") Text Size in mm (Deviations between each Font)
-("fontf") Font Style
-("sbtwl") Space Between Letters (font specific value)
-("vertoff") Vertical Offset of Text (font specific value)
-("vcp") Vertical Compressing of Text (in %) (use "-" for negative compressing)
-("hcp") Horizontal Compressing of Text (in %) (use "-" for negative compressing)
-("margin") Left/Right Margin of Text in mm (if left/right, also on centered -> margin will be on both sides - If X Axis for Text-Positioning is defined, Margin will take effect on the opposite end)
+	<coords>Line1</coords> Places the 1. Line of Text which is determined in the Inkscape-Plugin
+	coords Attributes for manipulation an positioning of Text (Orgin-Point left/bottom)
+	("x") X Position of Text-Field in mm (depending on Text Alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
+	("y") Y Position of Text-Field in mm (Bottom Origin-Point)
+	("align") Text Alignment (left/right/center/textcenter) // textcenter = orgin point is the center of text itself
+	("tsize") Text Size in mm (Deviations between each Font)
+	("fontf") Font Style
+	("sbtwl") Space Between Letters (font specific value)
+	("vertoff") Vertical Offset of Text (font specific value)
+	("vcp") Vertical Compressing of Text (in %) (use "-" for negative compressing)
+	("hcp") Horizontal Compressing of Text (in %) (use "-" for negative compressing)
+	("margin") Left/Right Margin of Text in mm (if left/right, also on centered -> margin will be on both sides - If X Axis for Text-Positioning is defined, Margin will take effect on the opposite end)
 
 ***Render Graphics:***
-Lines:  <coords x="0" y="26" endx="10" endy="26">Stroke</coords> // Place the beginning of the Line with the x y Coordinates and the end x y Coordinates (in mm)
+	Lines:  <coords x="0" y="26" endx="10" endy="26">Stroke</coords> // Place the beginning of the Line with the x y Coordinates and the end x y Coordinates (in mm)
 
 ***Automatism:***
-FOR: <coords x="9" y="2.5" sbtwl="0" fontf="standard" align="textcenter" margin="3" tsize="5" vcp="0">FOR</coords> // Graps the the Value of Line 1 and Line 2, get its first Letters, and the count difference of Value in Line 1 and Line 2. Example ( Line 1: F10; Line 2: F12 ) now he places the <coords>-Commands with its "FOR"-Values and count up from Line 1 to the amount of <coords>-Commands with the Step you defined with Line 2.
-From the Above Example with 5x <coords>-Command Lines: F10 F12 F14 F16 F18
+	FOR: <coords x="9" y="2.5" sbtwl="0" fontf="standard" align="textcenter" margin="3" tsize="5" vcp="0">FOR</coords> // Graps the the Value of Line 1 and Line 2, get its first Letters, and the count difference of Value in Line 1 and Line 2. Example ( Line 1: F10; Line 2: F12 ) now he places the <coords>-Commands with its "FOR"-Values and count up from Line 1 to the amount of <coords>-Commands with the Step you defined with Line 2.
+	From the Above Example with 5x <coords>-Command Lines: F10 F12 F14 F16 F18
