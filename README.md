@@ -15,7 +15,15 @@ This Extension is just tested with Linux at moment, should work with Windows too
 
 # Define Layouts
 - Make an .xml File with like the "example.xml" File, follow the Descriptions in the File or like the one below
-- Select the "Layout" Tab in the Extension and Direct the Source-File of your XML File "/home/user/hello.xml" for example
+- Use Layout 1 - 11, or edit the Names in the .inx File, the one in your .xml have to match with the ones in the .inx file
+- Select the "Layout" Tab in the Extension and direct the Source-File of your XML File "/home/user/hello.xml" for example
+
+# Use Layouts
+- .xml File ready? 
+- open "Render Text" in the "Extension" Tab, select a "Layout" you defined in the .xml file
+- Select the "Action" -> "Use Layout" at the Drop-Down Menu
+- Switch to "Layout" Tab, enter your Text in the Lines you defined in your Layout
+- Press Apply and be glad :)
 
 # Description of the XML File
 ***Text:***
