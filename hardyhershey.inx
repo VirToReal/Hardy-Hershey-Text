@@ -73,7 +73,6 @@
    <param name="spacing3" type="string" _gui-text="Vertical Offset of Text-Segment: ">0</param>
    <param name="compressy" type="string" _gui-text="Vertical Compressing of Text-Segment in %: ">100</param>
    <param name="compressx" type="string" _gui-text="Horizontal Compressing of Text-Segment in %: ">100</param>
-   <param name="metric" type="boolean" _gui-text="Use mm instead of pixel: ">0</param>
  </page>
  
  <page name="layout" _gui-text="Layout">
