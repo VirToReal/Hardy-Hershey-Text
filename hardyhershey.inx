@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Hardy Hershey Text</_name>
+    <id>virtograv.de.render.hardy_hershey</id>
+	<dependency type="executable" location="extensions">hardyhershey.py</dependency>
+	<dependency type="executable" location="extensions">hardyhersheydata.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+
+ <param name="tab" type="notebook">
+    <page name="splash" _gui-text="Render Text">
+	<param name="text" type="string" _gui-text="Text:">Hershey Text for Inkscape</param>
+
+        <param name="action" type="optiongroup" appearance="minimal"
+	     _gui-text="Action: ">
+		<_option value="render">Typeset that text</_option>
+  		<_option value="table" >Write glyph table</_option>
+		<_option value="layout" >Use Layout</_option> 
+        </param>
+
+	<param name="layout" type="optiongroup" appearance="minimal"
+	     _gui-text="Layout: ">
+		<_option value="none">Choose Layout...</_option>
+		<_option value="Layout 1">Layout 1</_option>
+  		<_option value="Layout 2">Layout 2</_option>
+		<_option value="Layout 3">Layout 3</_option>
+		<_option value="Layout 4">Layout 4</_option>
+		<_option value="Layout 5">Layout 5</_option>
+		<_option value="Layout 6">Layout 6</_option>
+		<_option value="Layout 7">Layout 7</_option>
+		<_option value="Layout 8">Layout 8</_option>
+		<_option value="Layout 9">Layout 9</_option>
+		<_option value="Layout 10">Layout 10</_option>
+		<_option value="Layout 11">Layout 11</_option>
+        </param>
+	
+        <param name="fontface" type="optiongroup" appearance="minimal"
+	     _gui-text="Font-Face: ">
+		<_option value="standard">Standard</_option>
+		<_option value="futural">Sans 1-stroke</_option>
+  		<_option value="futuram">Sans bold</_option> 
+
+		<_option value="timesr">Serif medium</_option>
+		<_option value="timesi">Serif medium italic</_option>
+		<_option value="timesib">Serif bold italic</_option>
+		<_option value="timesrb">Serif bold</_option>
+
+  		<_option value="scripts">Script 1-stroke</_option>
+		<_option value="cursive">Script 1-stroke (alt)</_option>
+		<_option value="scriptc">Script medium</_option>
+
+		<_option value="gothiceng">Gothic English</_option>
+		<_option value="gothicger">Gothic German</_option>
+		<_option value="gothicita">Gothic Italian</_option>	   
+
+		<_option value="greek">Greek 1-stroke</_option>
+		<_option value="timesg">Greek medium</_option>
+		<_option value="cyrillic">Cyrillic</_option>		
+		<_option value="japanese">Japanese</_option> 
+
+  		<_option value="astrology">Astrology</_option>
+		<_option value="mathlow">Math (lower)</_option>
+		<_option value="mathupp">Math (upper)</_option>
+		<_option value="markers">Markers</_option> 
+		<_option value="meteorology">Meteorology</_option>
+		<_option value="music">Music</_option>
+		<_option value="symbolic">Symbolic</_option>
+        </param>
+ </page>
+ 
+ <page name="config" _gui-text="Configuration">
+   <param name="spacing1" type="string" _gui-text="Space between the Letters: ">0</param>
+   <param name="spacing2" type="string" _gui-text="Space between the Glyph Table: ">3</param>
+   <param name="spacing3" type="string" _gui-text="Vertical Offset of Text-Segment: ">0</param>
+   <param name="compressy" type="string" _gui-text="Vertical Compressing of Text-Segment in %: ">100</param>
+   <param name="compressx" type="string" _gui-text="Horizontal Compressing of Text-Segment in %: ">100</param>
+   <param name="metric" type="boolean" _gui-text="Use mm instead of pixel: ">0</param>
+ </page>
+ 
+ <page name="layout" _gui-text="Layout">
+   <param name="ll1" type="string" _gui-text="Line 1: "></param>
+   <param name="ll2" type="string" _gui-text="Line 2: "></param>
+   <param name="ll3" type="string" _gui-text="Line 3: "></param>
+   <param name="ll4" type="string" _gui-text="Line 4: "></param>
+   <param name="ll5" type="string" _gui-text="Line 5: "></param>
+   <param name="xmlfile" type="string" _gui-text="Source of Layout XML File: ">~/</param>
+ </page>
+ 
+    <page name="info" _gui-text="About...">
+      <_param name="aboutpage" type="description" xml:space="preserve">
+This extension renders a line of text using
+"Hershey" fonts for plotters, derived from 
+NBS SP-424 1976-04, "A contribution to 
+computer typesetting techniques: Tables of
+Coordinates for Hershey's Repertory of
+Occidental Type Fonts and Graphic Symbols."
+
+"Standard" Font by by Andrew Mustun (QCad - 
+http://qcad.org)
+
+These are not traditional "outline" fonts, 
+but are instead "single-stroke" fonts, or
+"engraving" fonts where the character is
+formed by the stroke (and not the fill).
+
+For additional information, please visit:
+  www.evilmadscientist.com/go/hershey
+  www.github.com/HardRainbow/Hardy-Hershey-Text
+</_param>
+    </page>
+  </param>
+
+  <effect needs-live-preview="true" needs-document="no">
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Render"/>
+    </effects-menu>
+  </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">hardyhershey.py</command>
+    </script>
+</inkscape-extension>
