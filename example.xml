@@ -4,8 +4,6 @@ Description:
 
 Text:
 <coords>Line1</coords> Places the 1. Line of Text which is determined in the Inkscape-Plugin
-<coords>Hello</coords> Places the Text inside of <coords></coords> braces, except of Line1 / Line2 / Line3 etc.
-<if set="Line1"></if> Places everything inside the <if></if> braces only if "Line1" has Text
 
 coords Attributes for manipulation an positioning of Text (Orgin-Point left/bottom)
 ("x") X Position of Text-Field in mm (depending on Text Alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
