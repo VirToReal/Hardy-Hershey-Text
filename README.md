@@ -14,7 +14,7 @@ This Extension is based on the already included Inkscape-Extension "Hershey Text
 # Installation
 This Extension is just tested with Linux at moment, should work with Windows too
 - Place the hardyhershex.inx / hardyhershey.py / hardyhersheydata.py in the "extension" Folder of your Inkscape Installation - In Linux it should be here "/usr/share/inkscape/extensions/". 
-- Open the Extension be selecting the "Extensions" -> "Render" -> "Hardy Hershey Text". 
+- Open the Extension by selecting the "Extensions" -> "Render" -> "Hardy Hershey Text". 
 
 # Define Layouts
 - Make an .xml File with like the "example.xml" File, follow the Descriptions in the File or follow the Description further down in this Text 
