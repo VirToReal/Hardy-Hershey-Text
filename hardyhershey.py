@@ -21,7 +21,7 @@ import simplestyle
 import re
 from xml.dom import minidom
 
-Debug = True # Set True for Debug-Mode
+Debug = False # Set True for Debug-Mode
 
 # Public Constants 
 pxmm = 3.544 # Pixel/mm
