@@ -10,7 +10,7 @@ coords Attributes for manipulation an positioning of Text (Orgin-Point left/bott
 ("y") Y Position of Text-Field in mm (Bottom Origin-Point)
 ("align") Text Alignment (left/right/center/textcenter) // textcenter = orgin point is the center of text itself
 ("tsize") Text Size in mm (Deviations between each Font)
-("fontf") Font Style
+("fontf") Font Style - available Fonts: standard / astrology / cursive / cyrillic / futural / futuram / gothiceng / gothicger / gothicita / greek / japanese / markers / mathlow / mathupp / meteorology / music / scriptc / scripts / symbolic / timesg / timesi / timesib / timesr / timesrb
 ("sbtwl") Space Between Letters (font specific value)
 ("vertoff") Vertical Offset of Text (font specific value)
 ("vcp") Vertical Compressing of Text (in %) (use "-" for negative compressing)
