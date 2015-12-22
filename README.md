@@ -8,9 +8,6 @@ This Extension is based on the already included Inkscape-Extension "Hershey Text
 - Added new Single-Line Font "standard" by Andrew Mustun (QCad - http://qcad.org)
 - Added Text Manipulation Parameters
 
-# Known Issues
-- there is no fancy Error-Reporting at the moment, if your .xml code is incorrect.
-
 # Installation
 This Extension is just tested with Linux at moment, should work with Windows too
 - Place the hardyhershex.inx / hardyhershey.py / hardyhersheydata.py in the "extension" Folder of your Inkscape Installation - In Linux it should be here "/usr/share/inkscape/extensions/". 
