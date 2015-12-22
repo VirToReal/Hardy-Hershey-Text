@@ -1,15 +1,16 @@
 # Hardy-Hershey-Text
 Inkscape Addon for Hershey Text ***with Layouts***
-
+![HardyHersheyText](http://virtograv.de/Home/Neuigkeiten/Gallery/Original/InkscapeExt1.png)
 This Extension is based on the already included Inkscape-Extension "Hershey Text" of Windell H. Oskay, www.evilmadscientist.com
 
 # Included Features
 - Added Layout managment System with xml Files - You define a Layout and the Extension will place Text at your wish
 - Added new Single-Line Font "standard" by Andrew Mustun (QCad - http://qcad.org)
 - Added Text Manipulation Parameters
+- Automatic Fit of Text in available Space
 
 # Installation
-This Extension is just tested with Linux at moment, should work with Windows too
+This Extension is just tested with Linux at the moment, it should work with Windows and Mac too.
 - Place the hardyhershex.inx / hardyhershey.py / hardyhersheydata.py in the "extension" Folder of your Inkscape Installation - In Linux it should be here "/usr/share/inkscape/extensions/". 
 - Open the Extension by selecting the "Extensions" -> "Render" -> "Hardy Hershey Text". 
 
