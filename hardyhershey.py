@@ -19,6 +19,7 @@ import hardyhersheydata			#data file w/ Hershey font data
 import inkex
 import simplestyle
 import re
+import xml
 from xml.dom import minidom
 
 Debug = False # Set True for Debug-Mode
@@ -98,8 +99,11 @@ def draw_stroke(xpa, ypa, endx, endy, parent):
 	ll2g.set( 'transform',tls)
 
 def load_xml(filename, sel_layout, textlines, cur_layer): # Load XML File which selected from Configuration Tab
-	xmldoc = minidom.parse(filename)
-	LayoutsDOM(xmldoc, sel_layout, textlines, cur_layer)
+	try:
+	  xmldoc = minidom.parse(filename)
+	  LayoutsDOM(xmldoc, sel_layout, textlines, cur_layer)
+	except xml.parsers.expat.ExpatError, e:
+	  inkex.debug("Sorry, something seems wrong with your .xml File:\n" + str(e) + "\n\n")
 
 def LayoutsDOM(layouts, sel_layout, textlines, cur_layer): # Loads the XML DOM end executes its selected Layouts
 	layout = layouts.getElementsByTagName("layout")
@@ -179,17 +183,15 @@ def startPlacerLoop(cur_layer, textline1, textline2, sizex, sizey, xpa, ypa, ali
 	INT2 = regline2.group(2)
 	INTDIFF = int(INT2) - int(INT1)
 	
+	global i
 	if i < 2:
 	  textline = VAR1 + INT1
 	else:
 	  textline = VAR1 + str(int(INT1) + INTDIFF * (i-1))
-	  
 	placeLayoutetText(cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg)
 	
 	if Debug:
 	  inkex.debug(str("Looper: " + textline) + str(" Int: " + str(i) + "\n"))
-	  
-	global i
 	i += 1
 	  
 
