@@ -121,16 +121,31 @@ def handleLayoutTitle(layout, layout2, sel_layout, textlines, cur_layer): # Plac
 	if layouttitle == sel_layout: 
 	  sizex = layout2.getAttribute("x") # Get Width of Layout
 	  sizey = layout2.getAttribute("y") # Get Height of Layout
-	  handleCoords(layout2.getElementsByTagName("coords"), sizex, sizey, textlines, cur_layer)
+	  handleIfCoords(layout2.getElementsByTagName("if"), sizex, sizey, textlines, cur_layer)
+	  handleCoords(False,layout2.getElementsByTagName("coords"), sizex, sizey, textlines, cur_layer)
 	  if Debug:
 	    inkex.debug(str("X: " + sizex) + str(" Y: " + sizey))
 	    inkex.debug(str("LayoutTitle: " + layouttitle + " Selected Layout: " + str(sel_layout) + "\n"))
 	
-def handleCoords(coords, sizex, sizey, textlines, cur_layer): # Handle each Coordinates
-	for coord in coords:
-	    handleCoord(coord, sizex, sizey, textlines, cur_layer)
+def handleIfCoords(ifclauses, sizex, sizey, textlines, cur_layer): # Handle each IF- Coordinates
+	for ifclause in ifclauses:
+	  if Debug:
+	    inkex.debug(str("IfClause Braces: " + str(ifclause) + "\n"))
+	  
+	  coords = ifclause.getElementsByTagName("coords")
+	  ifset = ifclause.getAttribute("set") # Which Value should be watched
+	  handleCoords(ifset, coords, sizex, sizey, textlines, cur_layer)
+	
+def handleCoords(ifset, coords, sizex, sizey, textlines, cur_layer): # Handle each Coordinates
+	if not ifset:
+	  for coord in coords:
+	    if coord.parentNode.nodeName == 'layout':
+	      handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer)
+	else:
+	  for coord in coords:
+	      handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer)
 
-def handleCoord(coord, sizex, sizey, textlines, cur_layer): # Watch for seperate Alignment and Text Manipulation of eatch Text Coordinates
+def handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer): # Watch for seperate Alignment and Text Manipulation of eatch Text Coordinates
   	xpa = coord.getAttribute("x") # X Position of Text-Field (depending on text alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
 	ypa = coord.getAttribute("y") # Y Position of Text-Field (depending on text alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
 	align = coord.getAttribute("align") # Text Align 
@@ -143,9 +158,27 @@ def handleCoord(coord, sizex, sizey, textlines, cur_layer): # Watch for seperate
 	mrg = coord.getAttribute("margin") # Left/Right Margin of Text (only needed on left/right Text-Alignment)
 	val_coord = coord.firstChild.data # This Value contain the Line of Text in the Layout-Tab on GUI
 	
+	if Debug:
+	  inkex.debug(str("IfClause: " + str(ifset) + "\n"))
+	
 	if val_coord == "Stroke":
 	  endx = coord.getAttribute("endx") # This Value contain the end x Coordinate in mm for a rendered Stroke
 	  endy = coord.getAttribute("endy") # This value contain the end y Coordinate in mm for a rendered Stroke
+	
+	# Check if Statements and Place numeric Textline
+	if ifset is not False:
+	  if ifset == 'Line 1':
+	    checknr = 0
+	  elif ifset == 'Line 2':
+	    checknr = 1
+	  elif ifset == 'Line 3':
+	    checknr = 2
+	  elif ifset == 'Line 4':
+	    checknr = 3 
+	  elif ifset == 'Line 5':
+	    checknr = 4
+	  else:
+	    checknr = 5
 	
 	# Check Textline and Place Text
 	if val_coord == 'Line 1':
@@ -167,10 +200,11 @@ def handleCoord(coord, sizex, sizey, textlines, cur_layer): # Watch for seperate
 	  startPlacerLoop(cur_layer, textline1, textline2, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg) #Place Looped Text
 	  textline = False
 	else:
-	  textline = False
+	  textline = str(val_coord)
 	  
-	if textline:
-	  placeLayoutetText(cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg) #Place Text
+	if textline: # Check if Textline is available and if its defined to be placed
+	  if not ifset or textlines[checknr] is not "": 
+	    placeLayoutetText(cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg) #Place Text
 	if Debug:
 	  inkex.debug(str("Koordinaten: " + val_coord) + str(" Ausrichtung: " + align + "\n"))
 
