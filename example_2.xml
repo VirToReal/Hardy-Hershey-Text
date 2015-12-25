@@ -1,0 +1,55 @@
+<!--Description of Configurating this Layout-File for define a Layout for Plotting/Engraving Text-Signs
+
+Description:
+Text:
+<coords>Line1</coords> Places the 1. Line of Text which is determined in the Inkscape-Plugin
+<coords>Hello</coords> Places the Text inside of <coords></coords> braces, except of Line 1 / Line 2 / Line 3 etc.
+<if set="Line1"></if> Places everything inside the <if></if> braces only if "Line 1" has Text
+
+coords Attributes for manipulation an positioning of Text (Orgin-Point left/bottom)
+("x") X Position of Text-Field in mm (depending on Text Alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
+("y") Y Position of Text-Field in mm (Bottom Origin-Point)
+("align") Text Alignment (left/right/center/textcenter) // textcenter = orgin point is the center of text itself
+("tsize") Text Size in mm (Deviations between each Font)
+("fontf") Font Style
+("sbtwl") Space Between Letters (font specific value)
+("vertoff") Vertical Offset of Text (font specific value)
+("vcp") Vertical Compressing of Text (in %) (use "-" for negative compressing)
+("hcp") Horizontal Compressing of Text (in %) (use "-" for negative compressing)
+("margin") Left/Right Margin of Text in mm (if left/right, also on centered -> margin will be on both sides - If X Axis for Text-Positioning is defined, Margin will take effect on the opposite end)
+
+Render Graphics:
+Lines:  <coords x="0" y="26" endx="10" endy="26">Stroke</coords> // Place the beginning of the Line with the x y Coordinates and the end x y Coordinates (in mm)
+
+Automatism:
+FOR: <coords x="9" y="2.5" sbtwl="0" fontf="standard" align="textcenter" margin="3" tsize="5" vcp="0">FOR</coords> // Graps the the Value of Line 1 and Line 2, get its first Letters, and the count difference of Value in Line 1 and Line 2. Example ( Line 1: F10; Line 2: F12 ) now he places the <coords>-Commands with its "FOR"-Values and count up from Line 1 to the amount of <coords>-Commands with the Step you defined with Line 2.
+From the Above Example with 5x <coords>-Command Lines: F10 F12 F14 F16 F18
+
+
+-->
+
+<layouts>
+  <layout x="100" y="50">
+    <title>Layout 1</title>
+    <coords x="0" y="4" sbtwl="0" fontf="standard" align="center" tsize="3" vcp="-10">Hello World</coords>
+   
+    <if set="Line 1">
+      <coords x="0" y="8" sbtwl="0" fontf="standard" align="center" tsize="4">Line 2</coords>
+      <coords x="0" y="12" sbtwl="0" fontf="standard" align="center" tsize="2" margin="30">Line 3</coords>
+    </if>
+    
+    <if set="Line 2">
+      <coords x="0" y="16" sbtwl="0" fontf="standard" tsize="2" margin="5">Line 1</coords>
+      <coords x="0" y="20" sbtwl="0" fontf="standard" align="left" tsize="2" margin="5">Line 2</coords>
+    </if>
+    
+    <coords x="0" y="24" sbtwl="0" fontf="standard" align="left" tsize="2" margin="5">Line 3</coords>
+    <coords x="0" y="28" sbtwl="0" fontf="standard" align="right" tsize="2" margin="5">Line 4</coords>
+    
+    <coords x="14" y="32" sbtwl="10" fontf="standard" tsize="2" margin="2">Line 4</coords>
+    <coords x="24" y="36" sbtwl="10" fontf="standard" tsize="2" margin="2">Line 4</coords>
+    
+    <coords x="0" y="41" align="center" sbtwl="0" fontf="standard" tsize="5" margin="2">Line 1</coords>
+
+  </layout>
+</layouts>
