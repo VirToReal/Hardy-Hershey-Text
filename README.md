@@ -8,6 +8,8 @@ This Extension is based on the already included Inkscape-Extension "Hershey Text
 - Added new Single-Line Font "standard" by Andrew Mustun (QCad - http://qcad.org)
 - Added Text Manipulation Parameters
 - Automatic Fit of Text in available Space
+- Added if-statements to placed text/lines/static-text just if the defines Textline contains Text
+- Added static-text defined in xml-File
 
 # Installation
 This Extension is just tested with Linux at the moment, it should work with Windows and Mac too.
