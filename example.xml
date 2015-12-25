@@ -1,16 +1,17 @@
 <!--Description of Configurating this Layout-File for define a Layout for Plotting/Engraving Text-Signs
 
 Description:
-
 Text:
 <coords>Line1</coords> Places the 1. Line of Text which is determined in the Inkscape-Plugin
+<coords>Hello</coords> Places the Text inside of <coords></coords> braces, except of Line 1 / Line 2 / Line 3 etc.
+<if set="Line1"></if> Places everything inside the <if></if> braces only if "Line 1" has Text
 
 coords Attributes for manipulation an positioning of Text (Orgin-Point left/bottom)
 ("x") X Position of Text-Field in mm (depending on Text Alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
 ("y") Y Position of Text-Field in mm (Bottom Origin-Point)
 ("align") Text Alignment (left/right/center/textcenter) // textcenter = orgin point is the center of text itself
 ("tsize") Text Size in mm (Deviations between each Font)
-("fontf") Font Style - available Fonts: standard / astrology / cursive / cyrillic / futural / futuram / gothiceng / gothicger / gothicita / greek / japanese / markers / mathlow / mathupp / meteorology / music / scriptc / scripts / symbolic / timesg / timesi / timesib / timesr / timesrb
+("fontf") Font Style
 ("sbtwl") Space Between Letters (font specific value)
 ("vertoff") Vertical Offset of Text (font specific value)
 ("vcp") Vertical Compressing of Text (in %) (use "-" for negative compressing)
