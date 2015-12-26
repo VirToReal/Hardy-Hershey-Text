@@ -2,7 +2,7 @@
 Inkscape Addon for Hershey Text ***with Layouts***
 ![HardyHersheyText1](http://virtograv.de/Home/Neuigkeiten/Gallery/Original/InkscapeExt1.png)
 ![HardyHersheyText2](http://virtograv.de/Home/Neuigkeiten/Gallery/Original/InkscapeExt2.png)
-This Extension is based on the already included Inkscape-Extension "Hershey Text" of Windell H. Oskay, www.evilmadscientist.com
+This Extension is based on the already included Inkscape-Extension "Hershey Text" of Windell H. Oskay
 
 # Included Features
 - Added Layout managment System with xml Files - You define a Layout and the Extension will place Text at your wish
@@ -51,3 +51,7 @@ coords Attributes for manipulation an positioning of Text (Orgin-Point left/bott
  ***FOR:*** 
 - <coords x="9" y="2.5" sbtwl="0" fontf="standard" align="textcenter" margin="3" tsize="5" vcp="0">FOR</coords> // Graps the the Value of Line 1 and Line 2, get its first Letters, and the count difference of Value in Line 1 and Line 2. Example ( Line 1: F10; Line 2: F12 ) now he places the <coords>-Commands with its "FOR"-Values and count up from Line 1 to the amount of <coords>-Commands with the Step you defined with Line 2.
 - From the Above Example with 5x <coords>-Command Lines: F10 F12 F14 F16 F18
+
+***Credits
+- Original Hershey Text Plugin by Windell H. Oskay, www.evilmadscientist.com
+- .xml Layout and Text-Manipulation Features by me
