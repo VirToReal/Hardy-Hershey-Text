@@ -1,6 +1,7 @@
 # Hardy-Hershey-Text
 Inkscape Addon for Hershey Text ***with Layouts***
-![HardyHersheyText](http://virtograv.de/Home/Neuigkeiten/Gallery/Original/InkscapeExt1.png)
+![HardyHersheyText1](http://virtograv.de/Home/Neuigkeiten/Gallery/Original/InkscapeExt1.png)
+![HardyHersheyText2](http://virtograv.de/Home/Neuigkeiten/Gallery/Original/InkscapeExt2.png)
 This Extension is based on the already included Inkscape-Extension "Hershey Text" of Windell H. Oskay, www.evilmadscientist.com
 
 # Included Features
