@@ -54,4 +54,4 @@ coords Attributes for manipulation an positioning of Text (Orgin-Point left/bott
 
 # Credits
 - Original Hershey Text Plugin by Windell H. Oskay, www.evilmadscientist.com
-- .xml Layout and Text-Manipulation Features by me
+- .xml Layout and Text-Manipulation Features by me, www.virtograv.de
