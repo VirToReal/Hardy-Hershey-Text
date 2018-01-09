@@ -46,8 +46,8 @@ def available(value):
 def draw_svg_text(char, face, offset, vertoffset, parent):
 	style = { 'stroke': '#000000', 'fill': 'none', 'stroke-width': '0.5', 'stroke-miterlimit': '4', }
 	pathString = face[char]
-	splitString = pathString.split()  
-	midpoint = offset - int(splitString[0]) 
+	splitString = pathString.split()
+	midpoint = offset - int(splitString[0])
 	pathString = pathString[pathString.find("M"):] #portion after first move
 	trans = 'translate(' + str(midpoint) + ',' + str(vertoffset) + ')'
 	text_attribs = {'style':simplestyle.formatStyle(style), 'd':pathString, 'transform':trans}
@@ -73,12 +73,12 @@ def make_string(string, font, spacing, spacing1, spacing2, group):
 			w += 2*spacing
 			
 	return w
-      
+
 def draw_stroke(xpa, ypa, endx, endy, parent):
 	xpa = float(xpa)
 	xpa = xpa * pxmm
-  	ypa = float(ypa)
-      	ypa = ypa * pxmm  # constant px/mm 
+	ypa = float(ypa)
+	ypa = ypa * pxmm  # constant px/mm
 	ypa = -ypa + yorigin # Replace Origin Point to Inkscape-Document Origin Point (x axis is already clear)
 	endy = float(endy)
 	endy = endy * pxmm
@@ -88,83 +88,84 @@ def draw_stroke(xpa, ypa, endx, endy, parent):
 	
 	if Debug:
 	  inkex.debug("Stroke YPA: " + str(ypa) + " Stroke XPA: " + str(xpa) + "\n")
-  
-  	style = { 'stroke': '#000000', 'fill': 'none', 'stroke-width': '0.5', 'stroke-miterlimit': '4', }
+
+	style = { 'stroke': '#000000', 'fill': 'none', 'stroke-width': '0.5', 'stroke-miterlimit': '4', }
 	text_attribs = {'style':simplestyle.formatStyle(style), 'd':'M ' + str(xpa) + ' ' + str(ypa) + ' L ' + str(endx) + ' ' + str(endy)}
 	inkex.etree.SubElement(parent, inkex.addNS('path','svg'), text_attribs) 
-  
-  	ll2g_attribs = {inkex.addNS('label','inkscape'):'Layout Sroke' }
+
+	ll2g_attribs = {inkex.addNS('label','inkscape'):'Layout Sroke' }
 	ll2g = inkex.etree.SubElement(parent, 'h', ll2g_attribs)
 	tls = 'translate(0,0)' 
 	ll2g.set( 'transform',tls)
 
-def load_xml(filename, sel_layout, textlines, cur_layer): # Load XML File which selected from Configuration Tab
+def load_xml(filename, sel_layout, textlines, cur_layer, document): # Load XML File which selected from Configuration Tab
 	try:
 	  xmldoc = minidom.parse(filename)
-	  LayoutsDOM(xmldoc, sel_layout, textlines, cur_layer)
+	  LayoutsDOM(xmldoc, sel_layout, textlines, cur_layer, document)
 	except xml.parsers.expat.ExpatError, e:
 	  inkex.debug("Sorry, something seems wrong with your .xml File:\n" + str(e) + "\n\n")
 
-def LayoutsDOM(layouts, sel_layout, textlines, cur_layer): # Loads the XML DOM end executes its selected Layouts
+def LayoutsDOM(layouts, sel_layout, textlines, cur_layer, document): # Loads the XML DOM end executes its selected Layouts
 	layout = layouts.getElementsByTagName("layout")
-	handleLayouts(layout, sel_layout, textlines, cur_layer)
+	handleLayouts(layout, sel_layout, textlines, cur_layer, document)
 
-def handleLayouts(layouts, sel_layout, textlines, cur_layer): # Handle each single Layout 
+def handleLayouts(layouts, sel_layout, textlines, cur_layer, document): # Handle each single Layout 
 	for layout in layouts:
-	    handleLayout(layout, sel_layout, textlines, cur_layer)
+	    handleLayout(layout, sel_layout, textlines, cur_layer, document)
 
-def handleLayout(layout, sel_layout, textlines, cur_layer): # Cut out its Layout-Title
-	handleLayoutTitle(layout.getElementsByTagName("title")[0],layout, sel_layout, textlines, cur_layer)
+def handleLayout(layout, sel_layout, textlines, cur_layer, document): # Cut out its Layout-Title
+	handleLayoutTitle(layout.getElementsByTagName("title")[0],layout, sel_layout, textlines, cur_layer, document)
 
-def handleLayoutTitle(layout, layout2, sel_layout, textlines, cur_layer): # Place Text on its Coordinates and selected Alignment on matching with selected Layout
+def handleLayoutTitle(layout, layout2, sel_layout, textlines, cur_layer, document): # Place Text on its Coordinates and selected Alignment on matching with selected Layout
 	layouttitle = layout.firstChild.data
 	if layouttitle == sel_layout: 
 	  sizex = layout2.getAttribute("x") # Get Width of Layout
 	  sizey = layout2.getAttribute("y") # Get Height of Layout
-	  handleIfCoords(layout2.getElementsByTagName("if"), sizex, sizey, textlines, cur_layer)
-	  handleCoords(False,layout2.getElementsByTagName("coords"), sizex, sizey, textlines, cur_layer)
+	  handleIfCoords(layout2.getElementsByTagName("if"), sizex, sizey, textlines, cur_layer, document)
+	  handleCoords(False,layout2.getElementsByTagName("coords"), sizex, sizey, textlines, cur_layer, document)
 	  if Debug:
 	    inkex.debug(str("X: " + sizex) + str(" Y: " + sizey))
 	    inkex.debug(str("LayoutTitle: " + layouttitle + " Selected Layout: " + str(sel_layout) + "\n"))
 	
-def handleIfCoords(ifclauses, sizex, sizey, textlines, cur_layer): # Handle each IF- Coordinates
+def handleIfCoords(ifclauses, sizex, sizey, textlines, cur_layer, document): # Handle each IF- Coordinates
 	for ifclause in ifclauses:
 	  if Debug:
 	    inkex.debug(str("IfClause Braces: " + str(ifclause) + "\n"))
-	  
+
 	  coords = ifclause.getElementsByTagName("coords")
 	  ifset = ifclause.getAttribute("set") # Which Value should be watched
-	  handleCoords(ifset, coords, sizex, sizey, textlines, cur_layer)
+	  handleCoords(ifset, coords, sizex, sizey, textlines, cur_layer, document)
 	
-def handleCoords(ifset, coords, sizex, sizey, textlines, cur_layer): # Handle each Coordinates
+def handleCoords(ifset, coords, sizex, sizey, textlines, cur_layer, document): # Handle each Coordinates
 	if not ifset:
 	  for coord in coords:
 	    if coord.parentNode.nodeName == 'layout':
-	      handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer)
+	      handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer, document)
 	else:
 	  for coord in coords:
-	      handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer)
+	      handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer, document)
 
-def handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer): # Watch for seperate Alignment and Text Manipulation of eatch Text Coordinates
-  	xpa = coord.getAttribute("x") # X Position of Text-Field (depending on text alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
+def handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer, document): # Watch for seperate Alignment and Text Manipulation of each Text Coordinates
+	xpa = coord.getAttribute("x") # X Position of Text-Field (depending on text alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
 	ypa = coord.getAttribute("y") # Y Position of Text-Field (depending on text alignment / left = left-mid position of Text / right = right-mid position of text / center = mid position of text
-	align = coord.getAttribute("align") # Text Align 
-	tsize = coord.getAttribute("tsize") # Text Size 
+	align = coord.getAttribute("align") # Text Align
+	tsize = coord.getAttribute("tsize") # Text Size
 	textf = coord.getAttribute("fontf") # Font Face
 	sbtwl = coord.getAttribute("sbtwl") # Space Between Letters
 	vco = coord.getAttribute("vertoff") # Vertical Offset of Text
 	vcp = coord.getAttribute("vcp") # Vertical Compressing of Text
 	hcp = coord.getAttribute("hcp") # Horizontal Compressing of Text
 	mrg = coord.getAttribute("margin") # Left/Right Margin of Text (only needed on left/right Text-Alignment)
+	layer = coord.getAttribute("layer") # Name of the Layer where the Text should be placed
 	val_coord = coord.firstChild.data # This Value contain the Line of Text in the Layout-Tab on GUI
-	
+
 	if Debug:
 	  inkex.debug(str("IfClause: " + str(ifset) + "\n"))
-	
+
 	if val_coord == "Stroke":
 	  endx = coord.getAttribute("endx") # This Value contain the end x Coordinate in mm for a rendered Stroke
 	  endy = coord.getAttribute("endy") # This value contain the end y Coordinate in mm for a rendered Stroke
-	
+
 	# Check if Statements and Place numeric Textline
 	if ifset is not False:
 	  if ifset == 'Line 1':
@@ -179,7 +180,7 @@ def handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer): # Watch for s
 	    checknr = 4
 	  else:
 	    checknr = 5
-	
+
 	# Check Textline and Place Text
 	if val_coord == 'Line 1':
 	  textline = textlines[0]
@@ -197,18 +198,18 @@ def handleCoord(ifset, coord, sizex, sizey, textlines, cur_layer): # Watch for s
 	elif val_coord == 'FOR':
 	  textline1 = textlines[0]
 	  textline2 = textlines[1]
-	  startPlacerLoop(cur_layer, textline1, textline2, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg) #Place Looped Text
+	  startPlacerLoop(document, cur_layer, textline1, textline2, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg, layer) #Place Looped Text
 	  textline = False
 	else:
 	  textline = str(val_coord)
-	  
+
 	if textline: # Check if Textline is available and if its defined to be placed
 	  if not ifset or textlines[checknr] is not "": 
-	    placeLayoutetText(cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg) #Place Text
+	    placeLayoutetText(document, cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg, layer) #Place Text
 	if Debug:
 	  inkex.debug(str("Koordinaten: " + val_coord) + str(" Ausrichtung: " + align + "\n"))
 
-def startPlacerLoop(cur_layer, textline1, textline2, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg):
+def startPlacerLoop(cur_layer, textline1, textline2, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg, layer):
 	regline1 = pattern.match(str(textline1))
 	regline2 = pattern.match(str(textline2))
 	VAR1 = regline1.group(1)
@@ -216,76 +217,86 @@ def startPlacerLoop(cur_layer, textline1, textline2, sizex, sizey, xpa, ypa, ali
 	VAR2 = regline2.group(1)
 	INT2 = regline2.group(2)
 	INTDIFF = int(INT2) - int(INT1)
-	
+
 	global i
 	if i < 2:
 	  textline = VAR1 + INT1
 	else:
 	  textline = VAR1 + str(int(INT1) + INTDIFF * (i-1))
-	placeLayoutetText(cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg)
-	
+	placeLayoutetText(document, cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg, layer)
+
 	if Debug:
 	  inkex.debug(str("Looper: " + textline) + str(" Int: " + str(i) + "\n"))
 	i += 1
-	  
 
-def placeLayoutetText(cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg):
-  	
+
+def placeLayoutetText(document, cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize, textf, sbtwl, vco, vcp, hcp, mrg, layer): #Place Text on Inkscape-Canvas
+
+	# Define Layer to place on
+	if layer == "":
+	    #Use current layer
+	    cur_layer = cur_layer
+	    ll1g_attribs = {inkex.addNS('label','inkscape'):'Layout Line' }
+	else:
+	    #Create a new layer.
+	    cur_layer = document
+	    ll1g_attribs = {inkex.addNS('label','inkscape'):'%s' % (layer), inkex.addNS('groupmode','inkscape'):'layer' }
+
+
 	# Define Standard Values
 	if sbtwl == "":
 	  sbtwl = 0
-	
+
 	if available(vcp): # Define Standard-Values of vcp / Vertical Compressing
 	  vcp = float(vcp)
 	  vcp = vcp / 100
 	else:
 	  vcp = 0
-	    
+
 	if available(mrg): # Define Standard-Values of mrg / Margin of Text
 	  mrg = float(mrg) * pxmm
 	else:
 	  mrg = 0 * pxmm #Value in mm
-	    
+
 	if available(hcp): # Define Standard-Values of hcp / Horizontal Compressing
 	  hcp = float(hcp)
 	  hcp = hcp / 100
 	else:
 	  hcp = 0
-	  
+
 	if textf != "standard": # Stretch some unproportional Fonts fot matching in Height to each other (approximately)
 	    vcp = vcp / 2.27
 	    hcp = hcp / 2.27
-	    
+
 	if tsize != "": # Resize Text if tsize / Text Size / is defined
 	    if Debug:
 	      inkex.debug("1. Textsize VCP: " + str(vcp) + " 1. Textsize HCP: " + str(hcp) + "\n")
 	
-	    if textf != "standard":
-	      vcp += float(tsize) / mmpcpx1 # Divide wished Font-Size with its mean height value (in mm) ( Add Values if Compressing is enabled)
+	    if textf != "standard": # Divide wished Font-Size with its main height value (in mm) ( Add Values if Compressing is enabled)
+	      vcp += float(tsize) / mmpcpx1
 	      hcp += float(tsize) / mmpcpx1
-	    else:
-	      vcp += float(tsize) / mmpcpx2 # Divide wished Font-Size with its mean height value (in mm) ( Add Values if Compressing is enabled)
+	    else: # Divide wished Font-Size with its main height value (in mm) ( Add Values if Compressing is enabled)
+	      vcp += float(tsize) / mmpcpx2
 	      hcp += float(tsize) / mmpcpx2
-	    
+
 	    if Debug:
 	      inkex.debug("2. Textsize VCP: " + str(vcp) + " 2. Textsize HCP: " + str(hcp) + "\n")
-	    
+
 	if xpa == "":
 	  xpa = 0
 	else:
 	  xpa = float(xpa)
-	  
+
 	if ypa == "":
 	  ypa = 0
 	else:
 	  ypa = float(ypa)
-  
+
 	sizex = float(sizex) * pxmm
 	sizey = float(sizey) * pxmm
-  
-	ll1g_attribs = {inkex.addNS('label','inkscape'):'Layout Line' }
+
 	ll1g = inkex.etree.SubElement(cur_layer, 'g', ll1g_attribs)
-	
+
 	# Define allocated X-Coordinate of QCad-Fonts and "0"-Line of Hershey Fonts
 	if textf == "standard":
 	  axpa = axaqcf * vcp
@@ -293,42 +304,42 @@ def placeLayoutetText(cur_layer, textline, sizex, sizey, xpa, ypa, align, tsize,
 	else:
 	  aypa = ayahf * hcp
 	  axpa = 0
-	
+
 	textf = eval('hardyhersheydata.' + textf)
 	length = make_string(textline, textf, 0, int(sbtwl), vco, ll1g)
-	
+
 	if align == 'center': # If Alignment of Text is "centered"
 	  if length * vcp + mrg*2 > sizex: # If Text-Length is longer as the allocated Space, compress it automatically
 	    vcp = (length - ( length - ( sizex - mrg*2 ) )) / ( length )
 	  xpa = (( sizex - (float(length) * (float(vcp))) ) / 2) - axpa # Calculate Center even if Horizontal Compressed 
-	  
+
 	elif align == 'left': # If Alignment of Text is "left"
 	  if length * vcp + mrg > sizex: # If Text-Length is longer as the allocated Space, compress it automatically
 	    vcp = (length - ( length - ( sizex - mrg ) )) / ( length )
 	  xpa = mrg - axpa
-	  
+
 	elif align == 'right': # If Alignment of Text is "right"
 	  if length * vcp + mrg > sizex: # If Text-Length is longer as the allocated Space, compress it automatically
 	    vcp = (length - ( length - ( sizex - mrg ) )) / ( length )
 	  xpa = sizex - length*vcp - mrg - axpa
-	  
+
 	elif align == "textcenter": # If Alignment of Text itself is "centered"
 	  xpa = ( xpa * pxmm ) - ( ( length*vcp ) / 2 )
-	  
+
 	else:
 	  if length * vcp + mrg + xpa*pxmm > sizex: # If Text-Length is longer as the allocated Space, compress it automatically
 	    vcp = (length - ( length - ( sizex - mrg - xpa*pxmm ) )) / ( length )
 	  xpa = xpa * pxmm - axpa # constant px/mm
-	
+
 	ypa = (ypa * pxmm) - aypa # constant px/mm 
 	ypa = -ypa + yorigin # Replace Origin Point to Inkscape-Document Origin Point (x axis is already clear)
-	
+
 	tlc = 'translate(' + str(xpa) + ',' + str(ypa) + ') ' + 'scale(' + str(vcp) + ', ' + str(hcp) + ')' # Top Left Corner
 	ll1g.set( 'transform',tlc)
-	
+
 	if Debug:
 	  inkex.debug("length: " + str(length) + " sizex: " + str(sizex) + " vcp: " + str(vcp) + "\n")
-	
+
 	del (vcp, hcp)
 
 class Hershey( inkex.Effect ):
@@ -410,41 +421,41 @@ class Hershey( inkex.Effect ):
 		font = eval('hardyhersheydata.' + str(self.options.fontface))
 		clearfont = hardyhersheydata.futural  
 		#Baseline: modernized roman simplex from JHF distribution.
-		
+
 		w = 0  #Initial spacing offset
-		
+
 		# spacing1 between letters
 		if self.options.spacing1 != "":
 		  spacing1 = float(self.options.spacing1)
 		else:
 		  spacing1 = 0
-		  
+
 		# spacing2 between the Glyph-Table
 		if self.options.spacing2 != "":
 		  spacing = float(self.options.spacing2)
 		else:
 		  spacing = 0
-		  
+
 		# spacing3 Vertical Offset of Text-Segment
 		if self.options.spacing3 != "":
 		  spacing2 = float(self.options.spacing3)
 		else:
 		  spacing2 = 0
-		  
+
 		# compressy Vertical Compressing of Text-Segment
 		if self.options.compressy != "":
 		  compressy = float(self.options.compressy)
 		  compressy = compressy / 100
 		else:
 		  compressy = 1
-		  
+
 		# compressx Horizontal Compressing of Text-Segment
 		if self.options.compressx != "":
 		  compressx = float(self.options.compressx)
 		  compressx = compressx / 100
 		else:
 		  compressx = 1
-		  
+
 		# compressx Horizontal Compressing of Text-Segment
 		if self.options.metric == "true":
 		  metric = True
@@ -471,16 +482,16 @@ class Hershey( inkex.Effect ):
 				if w > wmax:
 					wmax = w
 			w = wmax
-			
+
 		elif self.options.action == "layout":
-		  
+
 		  #Generate from Layout
 		  if self.options.layout != "":
-		    
+
 			textlines = self.options.ll1, self.options.ll2, self.options.ll3, self.options.ll4, self.options.ll5 # Make Tuple out of Layout Text-Lines
-			load_xml(self.options.xmlfile, self.options.layout, textlines, self.current_layer) # Submit Layout
-			
-			
+			load_xml(self.options.xmlfile, self.options.layout, textlines, self.current_layer, self.document.getroot()) # Submit Layout
+
+
 		t = 'translate(' + str( self.view_center[0] - w*compressx/2) + ',' + str( self.view_center[1] ) + ')' + ' scale(' + str(compressy) + ', ' + str(compressx) + ')' 
 		g.set( 'transform',t)
 
