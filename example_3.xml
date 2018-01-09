@@ -15,6 +15,7 @@ coords Attributes for manipulation an positioning of Text (Orgin-Point left/bott
 ("vcp") Vertical Compressing of Text (in %) (use "-" for negative compressing)
 ("hcp") Horizontal Compressing of Text (in %) (use "-" for negative compressing)
 ("margin") Left/Right Margin of Text in mm (if left/right, also on centered -> margin will be on both sides - If X Axis for Text-Positioning is defined, Margin will take effect on the opposite end)
+("layer") Place Textline in Layer with the given name
 Render Graphics:
 Lines:  <coords x="0" y="26" endx="10" endy="26">Stroke</coords> // Place the beginning of the Line with the x y Coordinates and the end x y Coordinates (in mm)
 Automatism:
