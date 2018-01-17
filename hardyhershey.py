@@ -332,7 +332,11 @@ def placeLayoutetText(document, cur_layer, textline, sizex, sizey, xpa, ypa, ali
 	  xpa = xpa * pxmm - axpa # constant px/mm
 
 	ypa = (ypa * pxmm) - aypa # constant px/mm 
-	ypa = -ypa + yorigin # Replace Origin Point to Inkscape-Document Origin Point (x axis is already clear)
+	
+	if layer == "": # Because of the standard-layer "Layer 1" of Inkscape, the origin-point is still at document-standard A4
+	    ypa = -ypa + yorigin # Replace Origin Point to Inkscape-Document Origin Point (x axis is already clear)
+	else:
+	    ypa = -ypa + sizey
 
 	tlc = 'translate(' + str(xpa) + ',' + str(ypa) + ') ' + 'scale(' + str(vcp) + ', ' + str(hcp) + ')' # Top Left Corner
 	ll1g.set( 'transform',tlc)
@@ -340,7 +344,7 @@ def placeLayoutetText(document, cur_layer, textline, sizex, sizey, xpa, ypa, ali
 	if Debug:
 	  inkex.debug("length: " + str(length) + " sizex: " + str(sizex) + " vcp: " + str(vcp) + "\n")
 
-	del (vcp, hcp)
+	del (vcp, hcp, xpa, ypa)
 
 class Hershey( inkex.Effect ):
 	def __init__( self ):
