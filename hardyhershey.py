@@ -56,11 +56,14 @@ def draw_svg_text(char, face, offset, vertoffset, parent):
 	  inkex.debug("Char: " + str(char) + " PathString: " + str(pathString) + str(" Midpoint: " + str(midpoint) + " SplitString0: " + str(splitString[0]) + " SplitString1: " + str(splitString[1]) + "\n")) 
 	return midpoint + int(splitString[1])	#new offset value
 
-def make_string(string, font, spacing, spacing1, spacing2, group):
+def make_string(string, font, fontname, spacing, spacing1, spacing2, group):
 	#evaluate text string
 	#Check which Font is selected 
 	w = 0
-	letterVals = [ord(q) - 32 for q in unicode(string,'utf-8')]
+	if fontname == "standard":
+            letterVals = [ord(q) - 32 for q in unicode(string,'utf-8')]
+        else:
+            letterVals = [ord(q) - 32 for q in string]
 	if Debug:
 	  inkex.debug("FOR Q: " + str(letterVals) + " String:" + str(string) + "\n")
 	for q in letterVals:
@@ -305,8 +308,8 @@ def placeLayoutetText(document, cur_layer, textline, sizex, sizey, xpa, ypa, ali
 	  aypa = ayahf * hcp
 	  axpa = 0
 
-	textf = eval('hardyhersheydata.' + textf)
-	length = make_string(textline, textf, 0, int(sbtwl), vco, ll1g)
+	textfcomb = eval('hardyhersheydata.' + textf)
+	length = make_string(textline, textfcomb, textf, 0, int(sbtwl), vco, ll1g)
 
 	if align == 'center': # If Alignment of Text is "centered"
 	  if length * vcp + mrg*2 > sizex: # If Text-Length is longer as the allocated Space, compress it automatically
@@ -423,6 +426,7 @@ class Hershey( inkex.Effect ):
 		g_attribs = {inkex.addNS('label','inkscape'):'Hershey Text' }
 		g = inkex.etree.SubElement(self.current_layer, 'g', g_attribs)
 		font = eval('hardyhersheydata.' + str(self.options.fontface))
+		fontname = self.options.fontface
 		clearfont = hardyhersheydata.futural  
 		#Baseline: modernized roman simplex from JHF distribution.
 
@@ -467,7 +471,7 @@ class Hershey( inkex.Effect ):
 		  metric = False
 
 		if self.options.action == "render":
-		  w = make_string(self.options.text, font, spacing, spacing1, spacing2, g)
+		  w = make_string(self.options.text, font, fontname, spacing, spacing1, spacing2, g)
 	
 		elif self.options.action == "table":
 			#Generate glyph table
