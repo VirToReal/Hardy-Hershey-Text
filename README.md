@@ -1,3 +1,12 @@
+
+ATTENTION
+==============================
+I moved my repositories to gitlab, please do any suggestions there: https://gitlab.com/Hirmer/Hardy-Hershey-Text
+
+Thank you!
+
+
+
 # Hardy-Hershey-Text
 Inkscape Addon for Hershey Text ***with Layouts***
 ![HardyHersheyText1](http://virtograv.de/Home/Neuigkeiten/Gallery/Original/InkscapeExt0.png)
